@@ -1,0 +1,32 @@
+package yapp.co.kr.mlp.Item;
+
+import android.graphics.drawable.Drawable;
+
+/**
+ * Created by hayoung on 2015-08-29.
+ */
+public class ListItem {
+    private Drawable firstrank;
+    private String mission;
+
+    public ListItem(Drawable firstrank, String mission){
+        this.firstrank = firstrank;
+        this.mission = mission;
+    }
+
+    public Drawable getFirstrank(){
+        return firstrank;
+    }
+
+    public void setFirstrank(Drawable firstrank){
+        this.firstrank = firstrank;
+    }
+
+    public String getMission(){
+        return mission;
+    }
+
+    public void setMission(String mission){
+        this.mission = mission;
+    }
+}

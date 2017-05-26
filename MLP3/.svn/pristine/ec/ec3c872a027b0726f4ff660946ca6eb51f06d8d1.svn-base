@@ -1,0 +1,36 @@
+package yapp.co.kr.mlp.Item;
+
+/**
+ * Created by home on 2015-08-28.
+ */
+public class Pet {
+    private int id;
+    private String name;
+    private String comment;
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
+}

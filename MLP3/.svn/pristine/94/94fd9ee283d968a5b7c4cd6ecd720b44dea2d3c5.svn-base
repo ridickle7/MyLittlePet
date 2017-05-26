@@ -1,0 +1,808 @@
+package yapp.co.kr.mlp.component;
+
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.util.SparseArray;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.GridView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
+
+import yapp.co.kr.mlp.Item_adapter.BoastAdapter;
+import yapp.co.kr.mlp.Item_adapter.MainItemAdapter;
+import yapp.co.kr.mlp.Item_adapter.NaviDrawerAdapter;
+import yapp.co.kr.mlp.Item_adapter.QnaAdapter;
+import yapp.co.kr.mlp.Item_item.Boast;
+import yapp.co.kr.mlp.Item_item.Nav_list;
+import yapp.co.kr.mlp.Item_item.Pet;
+import yapp.co.kr.mlp.Item_item.Qna;
+import yapp.co.kr.mlp.R;
+
+//주석
+public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
+
+
+    /**
+     * The {@link android.support.v4.view.PagerAdapter} that will provide
+     * fragments for each of the sections. We use a
+     * {@link FragmentPagerAdapter} derivative, which will keep every
+     * loaded fragment in memory. If this becomes too memory intensive, it
+     * may be best to switch to a
+     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
+     */
+    SectionsPagerAdapter mSectionsPagerAdapter;
+    /**
+     * The {@link ViewPager} that will host the section contents.
+     */
+    ViewPager mViewPager;
+
+    static GridView grid;
+
+    Context ctx = this;
+    static ArrayList<Pet> petList;
+
+    DrawerLayout dlDrawer;
+    ActionBarDrawerToggle dtToggle;
+    ActionBar actionBar;
+
+    ActionBar.Tab new_tab;
+    ImageView tab_title;
+    ImageView tab_icon;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        dlDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        dtToggle = new ActionBarDrawerToggle(this, dlDrawer, R.string.app_name, R.string.app_name) {
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+        };
+        dlDrawer.setDrawerListener(dtToggle);
+
+        ImageButton navi_cal = (ImageButton) findViewById(R.id.photo);
+
+        navi_cal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dlDrawer.closeDrawers();
+            }
+        });
+
+
+        ListView nav_list = (ListView) findViewById(R.id.navigation_list);
+
+
+
+        ArrayList<Nav_list> subList = new ArrayList<Nav_list>();
+        Resources res = getResources();
+        Nav_list temp = new Nav_list(res.getDrawable(R.mipmap.nav_notice),"공지사항" );
+
+        subList.add(temp);
+
+        temp = new Nav_list(res.getDrawable(R.mipmap.nav_friend),"친구초대" );
+
+        subList.add(temp);
+
+        temp = new Nav_list(res.getDrawable(R.mipmap.nav_question),"문의하기" );
+
+        subList.add(temp);
+
+        temp = new Nav_list(res.getDrawable(R.mipmap.nav_setting),"설정    " );
+
+        subList.add(temp);
+
+        NaviDrawerAdapter adapters = new NaviDrawerAdapter(getApplicationContext(), R.layout.list_navidrawer, subList);
+        nav_list.setAdapter(adapters);
+
+        // Set up the action bar.
+        //final ActionBar actionBar = getSupportActionBar();
+        actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);      //이거만 추가시키면 앞에 아이콘 생김! (여기서는 네비게이션 드로우어)
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+        // Create the adapter that will return a fragment for each of the three
+        // primary sections of the activity.
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+        // Set up the ViewPager with the sections adapter.
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setOffscreenPageLimit(2);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        // When swiping between different sections, select the corresponding
+        // tab. We can also use ActionBar.Tab#select() to do this if we have
+        // a reference to the Tab.
+        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                actionBar.setSelectedNavigationItem(position);
+                switch (position) {
+                    case 0:
+                        break;
+
+                    case 1:
+                        break;
+
+                    case 2:
+                        break;
+
+                    case 3:
+                        break;
+                }
+            }
+        });
+
+
+        //actionBar.setBackgroundDrawable(new ColorDrawable(Color.WHITE));      //액션바 색깔 바꾸기
+        actionBar.setStackedBackgroundDrawable(new ColorDrawable(Color.WHITE)); //액션바 내 탭 바꾸기
+
+
+        // For each of the sections in the app, add a tab to the action bar.
+        for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
+            // Create a tab with text corresponding to the page title defined by
+            // the adapter. Also specify this Activity object, which implements
+            // the TabListener interface, as the callback (listener) for when
+            // this tab is selected.
+            switch (i) {
+                case 0:
+                    new_tab = actionBar.newTab();
+                    new_tab.setTabListener(this);
+                    new_tab.setCustomView(R.layout.tab_icon);
+                    tab_title = (ImageView) new_tab.getCustomView().findViewById(R.id.tab_title);
+                    tab_icon = (ImageView) new_tab.getCustomView().findViewById(R.id.tab_icon);
+                    tab_title.setBackgroundResource(R.mipmap.main_text_off);
+                    tab_icon.setBackgroundResource(R.mipmap.main_off);
+                    actionBar.addTab(new_tab);
+/*                    actionBar.addTab(
+                            actionBar.newTab()
+                                    .setIcon(R.mipmap.main_off)
+                                    .setText("친구추천")
+                                    .setTabListener(this));*/
+                    break;
+                case 1:
+                    new_tab = actionBar.newTab();
+                    new_tab.setTabListener(this);
+                    new_tab.setCustomView(R.layout.tab_icon);
+                    tab_title = (ImageView) new_tab.getCustomView().findViewById(R.id.tab_title);
+                    tab_icon = (ImageView) new_tab.getCustomView().findViewById(R.id.tab_icon);
+                    tab_title.setBackgroundResource(R.mipmap.star_text_off);
+                    tab_icon.setBackgroundResource(R.mipmap.star_off);
+                    actionBar.addTab(new_tab);
+/*                    actionBar.addTab(
+                            actionBar.newTab()
+                                    .setIcon(R.mipmap.star_off)
+                                    .setText("자랑하기")
+                                    .setTabListener(this));*/
+                    break;
+
+                case 2:
+                    new_tab = actionBar.newTab();
+                    new_tab.setTabListener(this);
+                    new_tab.setCustomView(R.layout.tab_icon);
+                    tab_title = (ImageView) new_tab.getCustomView().findViewById(R.id.tab_title);
+                    tab_icon = (ImageView) new_tab.getCustomView().findViewById(R.id.tab_icon);
+                    tab_title.setBackgroundResource(R.mipmap.thunder_text_off);
+                    tab_icon.setBackgroundResource(R.mipmap.thunder_off);
+                    actionBar.addTab(new_tab);
+
+                           /* actionBar.newTab()
+*//*                                    .setIcon(R.mipmap.thunder_off)
+                                    .setText("산책번개")
+                                    .setTabListener(this));*//*
+                                    .setCustomView(R.layout.tab_icon));*/
+                    break;
+
+                case 3:
+                    new_tab = actionBar.newTab();
+                    new_tab.setTabListener(this);
+                    new_tab.setCustomView(R.layout.tab_icon);
+                    tab_title = (ImageView) new_tab.getCustomView().findViewById(R.id.tab_title);
+                    tab_icon = (ImageView) new_tab.getCustomView().findViewById(R.id.tab_icon);
+                    tab_title.setBackgroundResource(R.mipmap.qna_text_off);
+                    tab_icon.setBackgroundResource(R.mipmap.qna_off);
+                    actionBar.addTab(new_tab);
+/*                    actionBar.addTab(
+                            actionBar.newTab()
+                                    .setIcon(R.mipmap.qna_off)
+                                    .setText("Q & A")
+                                    .setTabListener(this));*/
+                    break;
+            }
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        } else if (dtToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+        // When the given tab is selected, switch to the corresponding page in
+        // the ViewPager.
+        Log.d("도데체", tab.getPosition() + "");
+        switch (tab.getPosition()) {
+            case 0:
+                mViewPager.setCurrentItem(tab.getPosition());
+                //tab.setIcon(R.mipmap.main_on);
+                tab.getCustomView().findViewById(R.id.tab_icon).setBackgroundResource(R.mipmap.main_on);
+                tab.getCustomView().findViewById(R.id.tab_title).setBackgroundResource(R.mipmap.main_text_on);
+                break;
+            case 1:
+                mViewPager.setCurrentItem(tab.getPosition());
+                //tab.setIcon(R.mipmap.star_on);
+                tab.getCustomView().findViewById(R.id.tab_icon).setBackgroundResource(R.mipmap.star_on);
+                tab.getCustomView().findViewById(R.id.tab_title).setBackgroundResource(R.mipmap.star_text_on);
+                break;
+            case 2:
+                mViewPager.setCurrentItem(tab.getPosition());
+                //tab.setIcon(R.mipmap.thunder_on);
+                tab.getCustomView().findViewById(R.id.tab_icon).setBackgroundResource(R.mipmap.thunder_on);
+                tab.getCustomView().findViewById(R.id.tab_title).setBackgroundResource(R.mipmap.thunder_text_on);
+                break;
+            case 3:
+                mViewPager.setCurrentItem(tab.getPosition());
+                //tab.setIcon(R.mipmap.qna_on);
+                tab.getCustomView().findViewById(R.id.tab_icon).setBackgroundResource(R.mipmap.qna_on);
+                tab.getCustomView().findViewById(R.id.tab_title).setBackgroundResource(R.mipmap.qna_text_on);
+                break;
+        }
+    }
+
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+        switch (tab.getPosition()) {
+            case 0:
+                tab.getCustomView().findViewById(R.id.tab_icon).setBackgroundResource(R.mipmap.main_off);
+                tab.getCustomView().findViewById(R.id.tab_title).setBackgroundResource(R.mipmap.main_text_off);
+                //tab.setIcon(R.mipmap.main_off);
+                break;
+            case 1:
+                //tab.setIcon(R.mipmap.star_off);
+                tab.getCustomView().findViewById(R.id.tab_icon).setBackgroundResource(R.mipmap.star_off);
+                tab.getCustomView().findViewById(R.id.tab_title).setBackgroundResource(R.mipmap.star_text_off);
+                break;
+            case 2:
+                //tab.setIcon(R.mipmap.thunder_off);
+                tab.getCustomView().findViewById(R.id.tab_icon).setBackgroundResource(R.mipmap.thunder_off);
+                tab.getCustomView().findViewById(R.id.tab_title).setBackgroundResource(R.mipmap.thunder_text_off);
+                break;
+            case 3:
+                //tab.setIcon(R.mipmap.qna_off);
+                tab.getCustomView().findViewById(R.id.tab_icon).setBackgroundResource(R.mipmap.qna_off);
+                tab.getCustomView().findViewById(R.id.tab_title).setBackgroundResource(R.mipmap.qna_text_off);
+                break;
+        }
+    }
+
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    }
+
+    /**
+     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+     * one of the sections/tabs/pages.
+     */
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+        SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
+
+        public SectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            // getItem is called to instantiate the fragment for the given page.
+            // Return a PlaceholderFragment (defined as a static inner class below).
+
+            // return PlaceholderFragment.newInstance(position + 1); // 주석처리 후 아래 코드 추가
+
+            Fragment fragment = null;
+
+            switch (position) {
+                case 0:
+                    fragment = new SectionsFragment1();
+                    break;
+                case 1:
+                    fragment = new SectionsFragment2();
+                    break;
+                case 2:
+                    fragment = new SectionsFragment3();
+                    break;
+                case 3:
+                    fragment = new SectionsFragment4();
+            }
+            return fragment;
+        }
+
+
+        @Override
+        public int getCount() {
+            // Show 4 total pages.
+            return 4;
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            Fragment fragment = (Fragment) super.instantiateItem(container, position);
+            registeredFragments.put(position, fragment);
+            return fragment;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            registeredFragments.remove(position);
+            super.destroyItem(container, position, object);
+        }
+
+        public Fragment getRegisteredFragment(int position) {
+            return registeredFragments.get(position);
+        }
+
+        /*        @Override
+        public  getPageTitle(int position) {
+            Locale l = Locale.getDefault();
+            switch (position) {
+                case 0:
+                    return getDrawable(R.mipmap.main);
+                case 1:
+                    return getDrawable(R.mipmap.star);
+                case 2:
+                    return getDrawable(R.mipmap.thunder);
+                case 3:
+                    return getDrawable(R.mipmap.qna);
+            }
+            return null;
+        }*/
+
+    }
+
+    /**
+     * A placeholder fragment containing a simple view.
+     */
+    public static class PlaceholderFragment extends Fragment {
+        /**
+         * The fragment argument representing the section number for this
+         * fragment.
+         */
+        private static final String ARG_SECTION_NUMBER = "section_number";
+
+        /**
+         * Returns a new instance of this fragment for the given section
+         * number.
+         */
+        public static PlaceholderFragment newInstance(int sectionNumber) {
+            PlaceholderFragment fragment = new PlaceholderFragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        public PlaceholderFragment() {
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.activity_main, container, false);
+            return rootView;
+        }
+    }
+
+    public static class SectionsFragment1 extends Fragment {
+
+        public SectionsFragment1() {
+
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+
+            View rootView = inflater.inflate(R.layout.fragment_page1, container, false);
+
+            Toolbar toolbar1;
+            toolbar1 = (Toolbar) rootView.findViewById(R.id.toolbar1);
+            View spinnerContainer = LayoutInflater.from(this.getActivity()).inflate(R.layout.toolbar_spinner,
+                    toolbar1, false);
+            ActionBar.LayoutParams lp = new ActionBar.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            toolbar1.addView(spinnerContainer, lp);
+
+
+            Spinner spinner = (Spinner) spinnerContainer.findViewById(R.id.toolbar_spinner);
+
+            ArrayList<String> subList = new ArrayList<String>();
+            subList.add("최신순");
+            subList.add("인기순");
+            ArrayAdapter<String> adapters = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, subList);
+            spinner.setAdapter(adapters);
+
+            petList = new ArrayList<Pet>();
+
+            Pet temp = new Pet();
+
+            temp.setId(0);
+            temp.setName("봄비");
+            temp.setGender("중성");
+            temp.setBirthday("2015-03-01");
+            temp.setSpecific("망아지");
+            temp.setIntroduction_write("온순하고 똑부러지는 아이입니다. ");
+
+            petList.add(temp);
+
+            temp = new Pet();
+
+            temp.setId(0);
+            temp.setName("랄라");
+            temp.setGender("남자");
+            temp.setBirthday("1111-11-11");
+            temp.setSpecific("강아지");
+            temp.setIntroduction_write("저녁에는 3발로 다니고 오른쪽 발의 IQ는 430입니다.");
+
+            petList.add(temp);
+
+            temp = new Pet();
+
+            temp.setId(0);
+            temp.setName("공포마");
+            temp.setGender("남자");
+            temp.setBirthday("2015-02-23");
+            temp.setSpecific("강아지");
+            temp.setIntroduction_write("아침엔 개짖는 소리를 내고, 저녁에는 닭 우는 소리를 냅니다.");
+            petList.add(temp);
+
+            grid = (GridView) rootView.findViewById(R.id.grid);
+            MainItemAdapter adapter = new MainItemAdapter(this.getActivity(), R.layout.list_pet, petList);
+            grid.setAdapter(adapter);
+
+            grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    //Toast.makeText(this., "출력됬다" + position, Toast.LENGTH_LONG);
+                    Log.v("출력됬다", position + "");
+                    Intent intent = new Intent(getActivity(), MyPageActivity.class);
+                    intent.putExtra("showpage", "temp");
+                    startActivity(intent);
+                }
+            });
+            return rootView;
+        }
+    }
+
+
+    public static class SectionsFragment2 extends Fragment {
+
+        public SectionsFragment2() {
+
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_page2,
+                    container, false);
+
+            ListView listView01;
+            BoastAdapter adapter01;
+
+            Toolbar toolbar2;
+            toolbar2 = (Toolbar) rootView.findViewById(R.id.toolbar2);
+            View spinnerContainer = LayoutInflater.from(this.getActivity()).inflate(R.layout.toolbar_spinner,
+                    toolbar2, false);
+            ActionBar.LayoutParams lp = new ActionBar.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            toolbar2.addView(spinnerContainer, lp);
+
+
+            Spinner spinner = (Spinner) spinnerContainer.findViewById(R.id.toolbar_spinner);
+
+            ArrayList<String> subList = new ArrayList<String>();
+            subList.add("최신순");
+            subList.add("인기순");
+            ArrayAdapter<String> adapters = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, subList);
+            spinner.setAdapter(adapters);
+
+            Resources res = getResources();
+            ArrayList<Boast> list = new ArrayList<Boast>();
+            list.add(new Boast(res.getDrawable(R.mipmap.boast_ex1),
+                    "타지마할! 노란개 찾기", "2015-03-02 ~ 2015-11-02", res.getDrawable(R.mipmap.progressing)));
+            list.add(new Boast(res.getDrawable(R.mipmap.boast_ex2),
+                    "SnowWhite! 하얀개 찾기", "2015-03-02 ~ 2015-12-02", res.getDrawable(R.mipmap.progressing)));
+            list.add(new Boast(res.getDrawable(R.mipmap.boast_ex3),
+                    "Rainbow! 무지개 찾기", "2015-03-02 ~ 2015-04-02", res.getDrawable(R.mipmap.ending)));
+
+
+            listView01 = (ListView) rootView.findViewById(R.id.listView_main);
+
+            final Context temp = this.getActivity();
+            adapter01 = new BoastAdapter(temp, R.layout.list_sub, list);
+            listView01.setAdapter(adapter01);
+            //listView01.setFocusable(false);
+
+            listView01.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(temp, BoastActivity.class);
+                    //intent.putExtra("name","mike");
+                    startActivity(intent);
+                }
+            });
+
+            return rootView;
+        }
+
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+            if (requestCode == 1001) {
+
+            }
+        }
+    }
+
+    public static class SectionsFragment3 extends Fragment {
+
+        public SectionsFragment3() {
+
+        }
+
+        private static MapView mMapView;
+        private static GoogleMap mMap;
+        private static double latitude, longitude;
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            if (container == null) {
+                return null;
+            }
+
+            View rootView = inflater.inflate(R.layout.fragment_page3, container, false);
+            // Passing harcoded values for latitude & longitude. Please change as per your need. This is just used to drop a Marker on the Map
+            mMapView = (MapView) rootView.findViewById(R.id.map);
+            mMapView.onCreate(savedInstanceState);
+
+            mMapView.onResume();
+
+            try {
+                MapsInitializer.initialize(getActivity().getApplicationContext());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            MapsInitializer.initialize(this.getActivity());
+
+            mMap = mMapView.getMap();
+
+            //우리집 정보 (더미 데이터)
+            latitude = 37.293323;
+            longitude = 127.04341;
+            setUpMap();
+
+            chkGpsService();        //내 주변 정보 확인
+            for(int i=0 ; i<10 ; i++) {
+                addMarker(2*i, 10*i);            //마커 띄우기
+            }
+            return rootView;
+        }
+
+        private boolean chkGpsService() {
+
+            String gps = android.provider.Settings.Secure.getString(this.getActivity().getContentResolver(), android.provider.Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+
+            Log.d(gps, "aaaa");
+
+            if (!(gps.matches(".*gps.*") && gps.matches(".*network.*"))) {
+
+                // GPS OFF 일때 Dialog 표시
+                final AlertDialog.Builder gsDialog = new AlertDialog.Builder(this.getActivity());
+                gsDialog.setTitle("위치 서비스 설정");
+                gsDialog.setMessage("무선 네트워크 사용, GPS 위성 사용을 모두 체크하셔야 정확한 위치 서비스가 가능합니다.\n위치 서비스 기능을 설정하시겠습니까?");
+                gsDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // GPS설정 화면으로 이동
+                        Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        intent.addCategory(Intent.CATEGORY_DEFAULT);
+                        startActivity(intent);
+                        dialog.dismiss();
+                    }
+                })
+                        .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }).create().show();
+                return false;
+
+            } else {
+                return true;
+            }
+
+            //fragment 임시 설정
+            /*GpsAcceptFragment dialogFragment = GpsAcceptFragment.newInstance();
+            dialogFragment.setStyle(R.style.AppTheme, R.style.AppTheme);
+            dialogFragment.show(this.getActivity().getFragmentManager(), "TAG");*/
+        }
+        /***** Sets up the map if it is possible to do so *****/
+
+        /**
+         * This is where we can add markers or lines, add listeners or move the
+         * camera.
+         * <p/>
+         * This should only be called once and when we are sure that {@link #mMap}
+         * is not null.
+         */
+        private static void setUpMap() {
+            // For showing a move to my loction button
+            mMap.setMyLocationEnabled(true);
+            // For dropping a marker at a point on the Map
+            mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("My Home").snippet("Home Address"));
+            // For zooming automatically to the Dropped PIN Location
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,
+                    longitude), 12.0f));
+        }
+
+        private static void addMarker(float num_1,float num_2){
+            final LatLng PERTH = new LatLng(num_1, num_2);
+            Marker perth = mMap.addMarker(new MarkerOptions()
+                    .position(PERTH)
+                    .draggable(false));
+        }
+    }
+
+
+    public static class SectionsFragment4 extends Fragment {
+
+        public SectionsFragment4() {
+
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_page4,
+                    container, false);
+            Toolbar toolbar4;
+            toolbar4 = (Toolbar) rootView.findViewById(R.id.toolbar4);
+            View spinnerContainer = LayoutInflater.from(this.getActivity()).inflate(R.layout.toolbar_spinner,
+                    toolbar4, false);
+            ActionBar.LayoutParams lp = new ActionBar.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            toolbar4.addView(spinnerContainer, lp);
+
+
+            Spinner spinner = (Spinner) spinnerContainer.findViewById(R.id.toolbar_spinner);
+
+            ArrayList<String> subList = new ArrayList<String>();
+            subList.add("질병관련");
+            subList.add("정보관련");
+            ArrayAdapter<String> adapters = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, subList);
+            spinner.setAdapter(adapters);
+
+            final ArrayList<Qna> mainList = new ArrayList<>();
+            for (int i = 0; i < 3; i++) {
+                Qna temp = new Qna();
+
+                temp.setId("" + i);
+                temp.setQuestion("우리 뚱이가 너무 많이 먹어요ㅜㅜ.");
+                temp.setWatch(30 + i + "");
+                temp.setComment(20 + i + "");
+                temp.setName("hy21116");
+                temp.setDate("2015-08-23");
+
+                mainList.add(temp);
+            }
+
+            final QnaAdapter adapter;
+            adapter = new QnaAdapter(getActivity(), R.layout.list_qna, mainList);
+
+
+            ListView lv = (ListView) rootView.findViewById(R.id.listView);
+            lv.setAdapter(adapter);
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView parent, View view, int position, long id) {
+                    String str = mainList.get(position).getName();
+                    Toast.makeText(getActivity(), str, Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(getActivity(), AnswerActivity.class);
+                    //intent.putExtra("showpage",);
+                    startActivity(intent);
+                }
+            });
+
+            //like();
+            return rootView;
+        }
+    }
+
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        dtToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        dtToggle.onConfigurationChanged(newConfig);
+    }
+
+    private int dp2px(int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+                getResources().getDisplayMetrics());
+    }
+
+}

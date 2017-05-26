@@ -1,0 +1,79 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
+
+        <item name="colorAccent">#f37763</item>
+
+        <item name="colorPrimary">#f37763</item>
+
+        <item name="colorPrimaryDark">#DD4B4B</item>
+
+        <item name="colorControlHighlight">#E26652</item>
+
+        <item name="colorControlNormal">#f48874</item>
+        <item name="android:actionBarStyle">@style/ActionBar</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:actionBarTabStyle">@style/ActionBarTabStyle</item>
+    </style>
+
+    <style name="ActionBarTabStyle" parent="@android:style/Widget.Holo.ActionBar.TabView">
+        <item name="android:layout_height">50dp</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.NoActionBar">
+
+        <!-- Customize your theme here. -->
+
+
+        <item name="colorAccent">#FF4081</item>
+
+        <item name="colorPrimary">#F43111</item>
+
+        <item name="colorPrimaryDark">#DD4B4B</item>
+
+        <item name="colorControlHighlight">#e26652</item>
+
+        <item name="colorControlNormal">#f48874</item>
+
+        <item name="android:actionBarStyle">@style/ActionBar</item>
+
+        <item name="android:windowContentOverlay">@null</item>
+
+    </style>
+
+    <style name="ActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+
+
+        <item name="colorAccent">#f37763</item>
+
+        <item name="colorPrimary">#f37763</item>
+
+        <item name="colorPrimaryDark">#DD4B4B</item>
+
+        <item name="colorControlHighlight">#E26652</item>
+
+        <item name="colorControlNormal">#f48874</item>
+        <item name="drawerArrowStyle">@style/AppTheme.DrawerArrowToggle</item>
+
+        <item name="android:actionBarTabStyle">@style/ActionBarTabStyle</item>
+    </style>
+
+
+    <style name="AppTheme.DrawerArrowToggle" parent="Base.Widget.AppCompat.DrawerArrowToggle">
+
+
+        <item name="colorAccent">#f37763</item>
+
+        <item name="colorPrimary">#f37763</item>
+
+        <item name="colorPrimaryDark">#DD4B4B</item>
+
+        <item name="colorControlHighlight">#E26652</item>
+
+        <item name="colorControlNormal">#f48874</item>
+        <item name="color">@color/white</item>
+
+    </style>
+
+</resources>

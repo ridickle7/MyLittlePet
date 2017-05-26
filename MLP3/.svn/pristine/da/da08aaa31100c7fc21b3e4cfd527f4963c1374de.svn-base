@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#ffffff</color>
+
+    <color name="actionbar_color">#f37762</color>
+    <color name="background_color">#fdfaea</color>
+    <color name="main_color">#f37762</color>
+    <color name="background_color_red">#f37763</color>
+    <color name="bg_color_dialog_transparent">#99000000</color>
+
+    <color name="outline_color_dialog_button">#E0E0E0</color>
+    <color name="bg_color_dialog_button">#F9F9F9</color>
+    <color name="bg_color_button_pressed">#F45131</color>
+
+</resources>
