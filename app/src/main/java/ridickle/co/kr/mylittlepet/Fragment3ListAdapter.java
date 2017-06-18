@@ -35,6 +35,7 @@ public class Fragment3ListAdapter extends RecyclerView.Adapter<Fragment3ListAdap
     }
 
 
+
     @Override
     public DogInfoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // Inflate the view for this view holder

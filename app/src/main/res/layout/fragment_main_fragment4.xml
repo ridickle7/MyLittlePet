@@ -5,9 +5,16 @@
     tools:context="ridickle.co.kr.mylittlepet.MainFragment4">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.nhn.android.maps.NMapView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/mapView"/>
 
+
+    <SearchView
+        android:id="@+id/mapSearch"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="abcd"/>
 </FrameLayout>

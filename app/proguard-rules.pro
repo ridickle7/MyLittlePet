@@ -23,3 +23,8 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-libraryjars ../MyLittlePet/libs/3rdparty_login_library_android_4.1.4.jar
+-keep public class com.nhn.android.naverlogin.** {
+       public protected *;
+}
