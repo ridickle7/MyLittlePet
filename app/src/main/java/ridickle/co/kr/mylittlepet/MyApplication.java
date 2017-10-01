@@ -11,6 +11,8 @@ import com.nhn.android.naverlogin.OAuthLogin;
 
 public class MyApplication extends Application {
 
+    public static final int MY_PERMISSIONS_REQUEST_FINE_LOCATION= 1;
+
     private static OAuthLogin oAuthLoginInstance;
     public static final String ClientId = "08E45VL55DPdit9Rr9zh";
     public static final String ClientSecret = "7OH5D55MYY";

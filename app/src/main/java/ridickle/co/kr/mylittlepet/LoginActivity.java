@@ -11,6 +11,8 @@ import com.nhn.android.naverlogin.OAuthLogin;
 import com.nhn.android.naverlogin.OAuthLoginHandler;
 import com.nhn.android.naverlogin.ui.view.OAuthLoginButton;
 
+import ridickle.co.kr.mylittlepet.main.MainActivity;
+
 
 public class LoginActivity extends AppCompatActivity {
     private static Context ctx;
