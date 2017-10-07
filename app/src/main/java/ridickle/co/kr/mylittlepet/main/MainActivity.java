@@ -16,7 +16,7 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import ridickle.co.kr.mylittlepet.LoginActivity;
+import ridickle.co.kr.mylittlepet.login.LoginActivity;
 import ridickle.co.kr.mylittlepet.MyApplication;
 import ridickle.co.kr.mylittlepet.R;
 

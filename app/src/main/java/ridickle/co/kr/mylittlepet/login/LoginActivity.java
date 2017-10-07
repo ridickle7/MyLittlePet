@@ -1,4 +1,4 @@
-package ridickle.co.kr.mylittlepet;
+package ridickle.co.kr.mylittlepet.login;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -17,8 +17,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import ridickle.co.kr.mylittlepet.JSONPresenter;
+import ridickle.co.kr.mylittlepet.MyApplication;
+import ridickle.co.kr.mylittlepet.R;
+
 
 public class LoginActivity extends AppCompatActivity {
+    private static final String TAG = "LoginActivity";
     private Context ctx;
     private OAuthLogin mOAuthLoginInstance;
 
@@ -51,7 +56,6 @@ public class LoginActivity extends AppCompatActivity {
                 String tokenType = mOAuthLoginInstance.getTokenType(ctx);
 
                 new nLoginTask().execute(accessToken);
-
 
 //                getApplicationContext().startActivity(new Intent(getApplicationContext(), InitActivity.class));
 //                Activity temp = (Activity)ctx;

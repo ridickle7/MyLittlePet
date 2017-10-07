@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="bottom"
     android:orientation="vertical"
-    tools:context="ridickle.co.kr.mylittlepet.LoginActivity">
+    tools:context="ridickle.co.kr.mylittlepet.login.LoginActivity">
 
     <com.nhn.android.naverlogin.ui.view.OAuthLoginButton
         android:id="@+id/buttonOAuthLoginImg"

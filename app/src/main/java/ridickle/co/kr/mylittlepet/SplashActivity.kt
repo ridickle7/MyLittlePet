@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.widget.LinearLayout
 import ridickle.co.kr.mylittlepet.MyApplication.MY_PERMISSIONS_REQUEST_FINE_LOCATION
+import ridickle.co.kr.mylittlepet.login.LoginActivity
 
 class SplashActivity : AppCompatActivity() {
 

@@ -7,8 +7,9 @@ import retrofit2.Retrofit;
  */
 
 public class NetworkPresenter {
-    Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("https://api.github.com/")
-            .build();
 
+    Retrofit retrofit = new Retrofit.Builder()
+            .baseUrl(MyApplication.prop.getProperty("serverAddress"))
+            .build();
 }
+
