@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/settingItem1"
+            android:checked="true"
+            android:icon="@mipmap/ic_launcher"
+            android:title="로그아웃" />
+        <item
+            android:id="@+id/settingItem2"
+            android:icon="@mipmap/ic_launcher"
+            android:title="준비중1" />
+        <item
+            android:id="@+id/settingItem3"
+            android:icon="@mipmap/ic_launcher"
+            android:title="준비중2" />
+    </group>
+
+    <item android:title="서브 메뉴">
+        <menu>
+            <item
+                android:icon="@mipmap/ic_launcher"
+                android:id="@+id/nav_sub_menu_item01"
+                android:title="메뉴1" />
+            <item
+                android:icon="@mipmap/ic_launcher"
+                android:id="@+id/nav_sub_menu_item02"
+                android:title="메뉴2"  />
+        </menu>
+    </item>
+
+</menu>
