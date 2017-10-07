@@ -13,7 +13,11 @@
     <!-- WIFI 상태활용시 추가 -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <!-- network 상태를 미리 체크하여 연결 안된 경우 다이얼로그를 보여주려면 아래 permission 추가 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- Camera 캡쳐 시 추가 -->
+    <uses-permission android:name="android.permission.ACTION_IMAGE_CAPTURE" />
+    <!-- 외부 저장 공간 활용 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -22,8 +26,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".main.MainActivity"
-            android:theme="@style/NoActionBarTheme"/>
+        <activity
+            android:name=".main.MainActivity"
+            android:theme="@style/NoActionBarTheme" />
         <activity
             android:name=".SplashActivity"
             android:theme="@style/NoActionBarTheme">
@@ -33,16 +38,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity">
-
-        </activity>
+        <activity android:name=".LoginActivity" />
 
         <!-- [naveroauthlogin][start] 네이버아이디로로그인을 사용하기 위해서 넣어줘야하는 부분 -->
-        <activity android:name="com.nhn.android.naverlogin.ui.OAuthLoginActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
-        <activity android:name="com.nhn.android.naverlogin.ui.OAuthLoginInAppBrowserActivity"
-            android:label="OAuth2.0 In-app"/>
+        <activity
+            android:name="com.nhn.android.naverlogin.ui.OAuthLoginActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name="com.nhn.android.naverlogin.ui.OAuthLoginInAppBrowserActivity"
+            android:label="OAuth2.0 In-app" />
         <!-- [naveroauthlogin][end] -->
+        <activity
+            android:name=".detailEvent.DetailEventActivity"
+            android:label="@string/title_activity_detail_event"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".init.InitActivity"
+            android:label="@string/title_activity_init"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

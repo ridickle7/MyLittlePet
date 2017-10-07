@@ -22,6 +22,7 @@ class SplashActivity : AppCompatActivity() {
 
         requestPermissions(Manifest.permission.ACCESS_FINE_LOCATION);
         requestPermissions(Manifest.permission.ACCESS_COARSE_LOCATION);
+        MyApplication.setHeightWidth(applicationContext);
 
         layout!!.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
@@ -39,13 +40,10 @@ class SplashActivity : AppCompatActivity() {
                 // 해당 설명이 끝난뒤 requestPermissions()함수를 호출하여 권한허가를 요청해야 합니다
 
             } else {
-
                 ActivityCompat.requestPermissions(this,
                         arrayOf(permission),
                         MY_PERMISSIONS_REQUEST_FINE_LOCATION)
-
                 // 필요한 권한과 요청 코드를 넣어서 권한허가요청에 대한 결과를 받아야 합니다
-
             }
         }
     }

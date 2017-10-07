@@ -1,4 +1,4 @@
-package ridickle.co.kr.mylittlepet.main;
+package ridickle.co.kr.mylittlepet.main.fragment4;
 
 /**
  * Created by ridickle on 2017. 6. 12..

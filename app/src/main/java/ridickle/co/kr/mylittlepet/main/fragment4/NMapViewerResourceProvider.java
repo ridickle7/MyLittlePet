@@ -1,4 +1,4 @@
-package ridickle.co.kr.mylittlepet.main;
+package ridickle.co.kr.mylittlepet.main.fragment4;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -62,7 +62,6 @@ public class NMapViewerResourceProvider extends NMapResourceProvider {
         if (markerId >= NMapPOIflagType.NUMBER_BASE && markerId < NMapPOIflagType.NUMBER_END) { // Direction Number icons
 
         } else if (markerId >= NMapPOIflagType.CUSTOM_BASE && markerId < NMapPOIflagType.CUSTOM_END) { // Custom POI icons
-
         }
 
         return resourceId;
@@ -73,7 +72,7 @@ public class NMapViewerResourceProvider extends NMapResourceProvider {
         Drawable drawable = null;
 
         if (markerId >= NMapPOIflagType.NUMBER_BASE && markerId < NMapPOIflagType.NUMBER_END) { // Direction Number icons
-            int resourceId = (focused) ? R.mipmap.ic_map_no_02 : R.mipmap.ic_map_no_01;
+            int resourceId = (focused) ? R.drawable.ic_map_no_02 : R.drawable.ic_map_no_01;
             int fontColor = (focused) ? R.color.POI_FONT_COLOR_ALPHABET : R.color.POI_FONT_COLOR_NUMBER;
 
             String strNumber = String.valueOf(markerId - NMapPOIflagType.NUMBER_BASE);
@@ -92,12 +91,12 @@ public class NMapViewerResourceProvider extends NMapResourceProvider {
             NMapPOIitem poiItem = (NMapPOIitem)item;
 
             if (poiItem.showRightButton()) {
-                Drawable drawable = mContext.getResources().getDrawable(R.mipmap.bg_speech);
+                Drawable drawable = mContext.getResources().getDrawable(R.drawable.bg_speech);
                 return drawable;
             }
         }
 
-        Drawable drawable = mContext.getResources().getDrawable(R.mipmap.pin_ballon_bg);
+        Drawable drawable = mContext.getResources().getDrawable(R.drawable.pin_ballon_bg);
 
         return drawable;
     }
@@ -123,9 +122,9 @@ public class NMapViewerResourceProvider extends NMapResourceProvider {
             if (poiItem.showRightButton()) {
                 Drawable[] drawable = new Drawable[3];
 
-                drawable[0] = mContext.getResources().getDrawable(R.mipmap.btn_green_normal);
-                drawable[1] = mContext.getResources().getDrawable(R.mipmap.btn_green_pressed);
-                drawable[2] = mContext.getResources().getDrawable(R.mipmap.btn_green_highlight);
+                drawable[0] = mContext.getResources().getDrawable(R.drawable.btn_green_normal);
+                drawable[1] = mContext.getResources().getDrawable(R.drawable.btn_green_pressed);
+                drawable[2] = mContext.getResources().getDrawable(R.drawable.btn_green_highlight);
 
                 return drawable;
             }
@@ -144,9 +143,9 @@ public class NMapViewerResourceProvider extends NMapResourceProvider {
 
                 switch (poiItem.getRightAccessoryId()) {
                     case NMapPOIflagType.CLICKABLE_ARROW:
-                        drawable[0] = mContext.getResources().getDrawable(R.mipmap.pin_ballon_arrow);
-                        drawable[1] = mContext.getResources().getDrawable(R.mipmap.pin_ballon_on_arrow);
-                        drawable[2] = mContext.getResources().getDrawable(R.mipmap.pin_ballon_on_arrow);
+                        drawable[0] = mContext.getResources().getDrawable(R.drawable.pin_ballon_arrow);
+                        drawable[1] = mContext.getResources().getDrawable(R.drawable.pin_ballon_on_arrow);
+                        drawable[2] = mContext.getResources().getDrawable(R.drawable.pin_ballon_on_arrow);
                         break;
                 }
 
@@ -236,8 +235,8 @@ public class NMapViewerResourceProvider extends NMapResourceProvider {
     public Drawable[] getLocationDot() {        // 현재 위치 표시를 위한 이미지를 반환한다.
         Drawable[] drawable = new Drawable[2];
 
-        drawable[0] = mContext.getResources().getDrawable(R.mipmap.pubtrans_ic_mylocation_off);
-        drawable[1] = mContext.getResources().getDrawable(R.mipmap.pubtrans_ic_mylocation_on);
+        drawable[0] = mContext.getResources().getDrawable(R.drawable.pubtrans_ic_mylocation_off);
+        drawable[1] = mContext.getResources().getDrawable(R.drawable.pubtrans_ic_mylocation_on);
 
         for (int i = 0; i < drawable.length; i++) {
             int w = drawable[i].getIntrinsicWidth() / 2;
@@ -254,7 +253,7 @@ public class NMapViewerResourceProvider extends NMapResourceProvider {
     @Override
     public Drawable getDirectionArrow() {       // 나침반 각도 표시를 위한 이미지를 반환한다.
 
-        Drawable drawable = mContext.getResources().getDrawable(R.mipmap.ic_angle);
+        Drawable drawable = mContext.getResources().getDrawable(R.drawable.ic_angle);
 
         if (drawable != null) {
             int w = drawable.getIntrinsicWidth() / 2;
@@ -285,12 +284,12 @@ public class NMapViewerResourceProvider extends NMapResourceProvider {
     // Resource Ids for single icons
     private final ResourceIdsOnMap mResourceIdsForMarkerOnMap[] = {
             // Spot, Pin icons
-            new ResourceIdsOnMap(NMapPOIflagType.PIN, R.mipmap.ic_pin_01, R.mipmap.ic_pin_02),
-            new ResourceIdsOnMap(NMapPOIflagType.SPOT, R.mipmap.ic_pin_01, R.mipmap.ic_pin_02),
+            new ResourceIdsOnMap(NMapPOIflagType.PIN, R.drawable.ic_pin_01, R.drawable.ic_pin_02),
+            new ResourceIdsOnMap(NMapPOIflagType.SPOT, R.drawable.ic_pin_01, R.drawable.ic_pin_02),
 
             // Direction POI icons: From, To
-            new ResourceIdsOnMap(NMapPOIflagType.FROM, R.mipmap.ic_map_start, R.mipmap.ic_map_start_over),
-            new ResourceIdsOnMap(NMapPOIflagType.TO, R.mipmap.ic_map_arrive, R.mipmap.ic_map_arrive_over),
+            new ResourceIdsOnMap(NMapPOIflagType.FROM, R.drawable.ic_map_start, R.drawable.ic_map_start_over),
+            new ResourceIdsOnMap(NMapPOIflagType.TO, R.drawable.ic_map_arrive, R.drawable.ic_map_arrive_over),
     };
 
     private int getResourceIdOnMapView(int markerId, boolean focused, ResourceIdsOnMap resourceIdsArray[]) {

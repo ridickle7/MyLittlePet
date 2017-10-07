@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="POI_FONT_COLOR_ALPHABET">#FFFFFFFF</color>
     <color name="POI_FONT_COLOR_NUMBER">#FF909090</color>
+    <color name="white">#FFFFFFFF</color>
 </resources>

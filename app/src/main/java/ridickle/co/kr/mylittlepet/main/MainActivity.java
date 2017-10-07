@@ -2,6 +2,7 @@ package ridickle.co.kr.mylittlepet.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -19,8 +20,6 @@ import ridickle.co.kr.mylittlepet.LoginActivity;
 import ridickle.co.kr.mylittlepet.MyApplication;
 import ridickle.co.kr.mylittlepet.R;
 
-import static ridickle.co.kr.mylittlepet.R.id.tab;
-
 public class MainActivity extends AppCompatActivity implements MainPresenter.View {
     MainPresenter mPresenter;
     Toolbar toolBar;
@@ -35,18 +34,12 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mPresenter = MainPresenterImpl.newInstance(this);
-
-        tabLayout = (TabLayout) findViewById(tab);
-        frameLayout = (FrameLayout) findViewById(R.id.frameLayout);
-
-        drawerSetting();
-        mPresenter.fragmentSetting(tabLayout, 0);
+        mPresenter = MainPresenterImpl.newInstance();
+        mPresenter.uiSetting(this);
     }
 
 
-
-    private void drawerSetting(){
+    private void drawerSetting() {
         // 1. 네비게이션 버튼 활성화 (햄버그바)
         toolBar = (Toolbar) findViewById(R.id.toolBar);
         setSupportActionBar(toolBar);
@@ -65,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
                 drawerLayout.closeDrawers();
 
                 int id = menuItem.getItemId();
-                switch(id){
+                switch (id) {
                     case R.id.settingItem1: // 로그아웃
                         MyApplication.getOAuthLoginInstance().logout(getApplicationContext());
                         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
@@ -98,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        switch(id){
+        switch (id) {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
@@ -111,13 +104,28 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     }
 
     @Override
-    public void tabClickEvent(String str) {
+    public void tabClick(String str) {
         Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
     }
 
     // fragment 세팅
     @Override
     public void viewSetting() {
+        new Handler().postDelayed(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        tabLayout.getTabAt(2).select();
+                    }
+                }, 100);
+    }
 
+    @Override
+    public void settingUI() {
+        tabLayout = (TabLayout) findViewById(R.id.tab);
+        frameLayout = (FrameLayout) findViewById(R.id.frameLayout);
+
+        drawerSetting();
+        mPresenter.fragmentSetting(tabLayout, this, null, MainPresenterImpl.MAINACTIVITY_ACTIVITY);
     }
 }

@@ -1,69 +1,48 @@
 package ridickle.co.kr.mylittlepet.main;
 
-import android.app.Activity;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentActivity;
+import android.widget.LinearLayout;
+
+import java.util.ArrayList;
 
 import ridickle.co.kr.mylittlepet.R;
+import ridickle.co.kr.mylittlepet.main.fragment3.MainFragment3;
 
 /**
  * Created by ridickle on 2017. 9. 29..
  */
 
 public class MainPresenterImpl extends MainModel implements MainPresenter {
-    public final int MAINACTIVITY_ACTIVITY = 0;
-    public final int MAINACTIVITY_FRAGMENT1 = 1;
-    public final int MAINACTIVITY_FRAGMENT2 = 2;
-    public final int MAINACTIVITY_FRAGMENT3 = 3;
-    public final int MAINACTIVITY_FRAGMENT4 = 4;
-    public final int MAINACTIVITY_FRAGMENT5 = 5;
+    public final static int MAINACTIVITY_ACTIVITY      = 0;
+    public final static int MAINACTIVITY_FRAGMENT1     = 1;
+    public final static int MAINACTIVITY_FRAGMENT2     = 2;
+    public final static int MAINACTIVITY_FRAGMENT3     = 3;
+    public final static int MAINACTIVITY_FRAGMENT4     = 4;
+    public final static int MAINACTIVITY_FRAGMENT5     = 5;
+    public final static int MAINACTIVITY_FRAGMENT1_1   = 6;
+    public final static int MAINACTIVITY_FRAGMENT1_2   = 7;
+    public final static int MAINACTIVITY_FRAGMENT1_3   = 8;
+    public final static int MAINACTIVITY_FRAGMENT1_4   = 9;
 
 
     private static MainPresenterImpl instance = null;
-    public static FragmentActivity activity;
-    private MainPresenter.View view;
-    private MainPresenter.Fragment fragment;
 
-    public MainPresenterImpl(MainPresenter.View view) {
-        this.activity = (FragmentActivity) view;
-    }
-
-    public MainPresenterImpl(Activity activity) {
-        this.activity = (FragmentActivity) activity;
+    public MainPresenterImpl() {
     }
 
     // 1. view 설정
-    public static synchronized MainPresenterImpl newInstance(MainPresenter.View view) {
+    public static synchronized MainPresenterImpl newInstance() {
         if (instance == null) {
-            instance = new MainPresenterImpl(view);
+            instance = new MainPresenterImpl();
         }
-
-        instance.view = view;
-
         return instance;
     }
 
-    // 1-2. fragment 설정
-    public static synchronized MainPresenterImpl newInstance(Activity activity, MainPresenter.Fragment fragment) {
-        if (instance == null) {
-            instance = new MainPresenterImpl(activity);
-        }
-
-        instance.fragment = fragment;
-
-        return instance;
-    }
-
-
     @Override
-    public void tabClickEvent(TabLayout.Tab tab, int position) {
-        instance.view.tabClickEvent("Tab" + position);
+    public void fragmentSetting(final TabLayout tabLayout, final MainPresenter.View activity, final MainPresenter.Fragment fragment, int flag) {
 
-    }
-
-    @Override
-    public void fragmentSetting(final TabLayout tabLayout, int flag) {
-        if (flag == 0) {
+        // 메인 액티비티
+        if (flag == MAINACTIVITY_ACTIVITY) {
             tabLayout.addTab(tabLayout.newTab().setIcon(R.mipmap.ic_launcher));
             tabLayout.addTab(tabLayout.newTab().setIcon(R.mipmap.ic_launcher));
             tabLayout.addTab(tabLayout.newTab().setIcon(R.mipmap.ic_launcher));
@@ -74,9 +53,8 @@ public class MainPresenterImpl extends MainModel implements MainPresenter {
             tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
-                    setCurrentTabFragment(tabLayout.getSelectedTabPosition(), MAINACTIVITY_ACTIVITY);
-                    tabClickEvent(tab, tabLayout.getSelectedTabPosition());
-
+                    setCurrentTabFragment(activity, tabLayout.getSelectedTabPosition(), MAINACTIVITY_ACTIVITY);
+                    activity.tabClick("Tab" + tabLayout.getSelectedTabPosition());
                 }
 
                 @Override
@@ -89,11 +67,12 @@ public class MainPresenterImpl extends MainModel implements MainPresenter {
 
                 }
             });
-            replaceFragment(MainFragment3.newInstance(), R.id.frameLayout);
-            instance.view.viewSetting();
+            replaceFragment(activity, MainFragment3.newInstance(), R.id.frameLayout);
+            activity.viewSetting();
         }
 
-        else if (flag == 1) {
+        // 메인 액티비티 - 1번 프레그먼트
+        else if (flag == MAINACTIVITY_FRAGMENT1) {
             tabLayout.addTab(tabLayout.newTab().setIcon(R.mipmap.ic_launcher));
             tabLayout.addTab(tabLayout.newTab().setIcon(R.mipmap.ic_launcher));
             tabLayout.addTab(tabLayout.newTab().setIcon(R.mipmap.ic_launcher));
@@ -103,9 +82,7 @@ public class MainPresenterImpl extends MainModel implements MainPresenter {
             tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
-                    setCurrentTabFragment(tabLayout.getSelectedTabPosition(), MAINACTIVITY_FRAGMENT1);
-                    tabClickEvent(tab, tabLayout.getSelectedTabPosition());
-
+                    setCurrentTabFragment(activity, tabLayout.getSelectedTabPosition(), MAINACTIVITY_FRAGMENT1);
                 }
 
                 @Override
@@ -118,7 +95,45 @@ public class MainPresenterImpl extends MainModel implements MainPresenter {
 
                 }
             });
-            ((Fragment1)(instance.fragment)).viewSetting();
+            fragment.viewSetting();
         }
+
+        else if (flag == MAINACTIVITY_FRAGMENT1_3) {
+            fragment.viewSetting();
+        }
+    }
+
+    @Override
+    public void uiSetting(MainPresenter.View activity) {
+        activity.settingUI();
+    }
+
+    @Override
+    public void uiSetting(android.view.View view, Fragment fragment) {
+        fragment.settingUI(view);
+    }
+
+    @Override
+    public void f1_3Tag(android.view.View view, Fragment1_3 fragment) {
+        ArrayList<String> dummyList = new ArrayList<>();
+        for(int i=0 ; i<12 ; i++)
+            dummyList.add("a");
+
+        ArrayList<Integer> idList = tagInflating((LinearLayout)view, dummyList);
+        fragment.tagSetting(view, idList);
+    }
+
+    @Override
+    public void clickTag(Fragment1_3 fragment, String tagName) {
+        fragment.tagClicked(tagName);
+    }
+
+    @Override
+    public void f1_3Info(Fragment1_3 fragment) {
+        ArrayList<String> dummyList = new ArrayList<>();
+        for(int i=0 ; i<5 ; i++)
+            dummyList.add("a" + i);
+
+        fragment.infoSetting(dummyList);
     }
 }

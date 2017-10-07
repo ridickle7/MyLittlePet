@@ -1,4 +1,4 @@
-package ridickle.co.kr.mylittlepet.main;
+package ridickle.co.kr.mylittlepet.main.fragment4;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,15 +29,19 @@ import com.nhn.android.mapviewer.overlay.NMapPOIdataOverlay;
 
 import ridickle.co.kr.mylittlepet.MyApplication;
 import ridickle.co.kr.mylittlepet.R;
+import ridickle.co.kr.mylittlepet.main.MainPresenter;
+import ridickle.co.kr.mylittlepet.main.MainPresenterImpl;
 
 /**
  * Created by ridickle on 2017. 6. 2..
  */
 
-public class MainFragment4 extends Fragment implements MainPresenter.Fragment4  {
+public class MainFragment4 extends Fragment implements MainPresenter.Fragment4 {
 
     private static final String LOG_TAG = "MainFragment4 : ";
     private static final boolean DEBUG = false;
+    private MainPresenter mPresenter;
+    private static MainFragment4 instance;
 
     private NMapContext mapContext;
 
@@ -183,11 +187,13 @@ public class MainFragment4 extends Fragment implements MainPresenter.Fragment4  
 
     public MainFragment4() {
         // Required empty public constructor
+        mPresenter = MainPresenterImpl.newInstance();
     }
 
     public static MainFragment4 newInstance() {
-        MainFragment4 fragment = new MainFragment4();
-        return fragment;
+        if (instance == null)
+            instance = new MainFragment4();
+        return instance;
     }
 
 
@@ -293,6 +299,7 @@ public class MainFragment4 extends Fragment implements MainPresenter.Fragment4  
 
     private void createOverLay() {
         int markerId = NMapPOIflagType.PIN;
+//        int markerId = NMapPOIflagType.CUSTOM_BASE;
 
         // set POI data
         NMapPOIdata poiData = new NMapPOIdata(2, mMapViewerResourceProvider);
@@ -376,5 +383,15 @@ public class MainFragment4 extends Fragment implements MainPresenter.Fragment4  
     public void onDestroy() {
         mapContext.onDestroy();
         super.onDestroy();
+    }
+
+    @Override
+    public void viewSetting() {
+
+    }
+
+    @Override
+    public void settingUI(View view) {
+
     }
 }

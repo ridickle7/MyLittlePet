@@ -1,7 +1,6 @@
-package ridickle.co.kr.mylittlepet.main;
+package ridickle.co.kr.mylittlepet.main.fragment3;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,14 +10,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
-
 import java.util.ArrayList;
 
 import ridickle.co.kr.mylittlepet.DogInfo;
 import ridickle.co.kr.mylittlepet.R;
+import ridickle.co.kr.mylittlepet.main.MainPresenterImpl;
+import ridickle.co.kr.mylittlepet.RecyclerViewPresenter;
 
 /**
  * Created by ridickle on 2017. 6. 3..
@@ -52,18 +49,7 @@ public class Fragment3ListAdapter extends RecyclerView.Adapter<Fragment3ListAdap
     public void onBindViewHolder(final DogInfoViewHolder holder, int position) {
         DogInfo temp = dogInfoList.get(position);
 
-        // 이미지 처리
-        if(!(temp.getAddress().equals(""))){
-
-            Glide.with(context.getApplicationContext()).load(temp.getImgUrl()).into(new SimpleTarget<Drawable>() {
-                @Override
-                public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
-                    holder.background.setBackground(resource);
-                }
-            });
-
-
-        }
+        RecyclerViewPresenter.setImage(context, holder.background, temp.getImgUrl(), MainPresenterImpl.MAINACTIVITY_FRAGMENT3);
 
         // 좋아요 없을 경우
         if(temp.getIsGood() == 0)
