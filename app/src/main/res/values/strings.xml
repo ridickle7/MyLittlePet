@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MyLittlePet</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="str_done">str_done</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_detail_event">DetailEventActivity</string>
+    <string name="title_activity_init">InitActivity</string>
+</resources>
