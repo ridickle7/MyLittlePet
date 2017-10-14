@@ -29,18 +29,16 @@ import com.nhn.android.mapviewer.overlay.NMapPOIdataOverlay;
 
 import ridickle.co.kr.mylittlepet.MyApplication;
 import ridickle.co.kr.mylittlepet.R;
-import ridickle.co.kr.mylittlepet.main.MainPresenter;
-import ridickle.co.kr.mylittlepet.main.MainPresenterImpl;
 
 /**
  * Created by ridickle on 2017. 6. 2..
  */
 
-public class MainFragment4 extends Fragment implements MainPresenter.Fragment4 {
+public class MainFragment4 extends Fragment implements MainF4Presenter.fragment {
 
     private static final String LOG_TAG = "MainFragment4 : ";
     private static final boolean DEBUG = false;
-    private MainPresenter mPresenter;
+    private MainF4Presenter mPresenter;
     private static MainFragment4 instance;
 
     private NMapContext mapContext;
@@ -187,10 +185,10 @@ public class MainFragment4 extends Fragment implements MainPresenter.Fragment4 {
 
     public MainFragment4() {
         // Required empty public constructor
-        mPresenter = MainPresenterImpl.newInstance();
+        mPresenter = MainF4PresenterImpl.getInstance(this);
     }
 
-    public static MainFragment4 newInstance() {
+    public static MainFragment4 getInstance() {
         if (instance == null)
             instance = new MainFragment4();
         return instance;
@@ -216,7 +214,7 @@ public class MainFragment4 extends Fragment implements MainPresenter.Fragment4 {
         super.onActivityCreated(savedInstanceState);
 
         mapView = (NMapView) getView().findViewById(R.id.mapView);
-        mapView.setClientId(MyApplication.ClientId);// 클라이언트 아이디 설정
+        mapView.setClientId(MyApplication.getProp().getProperty("ClientId"));// 클라이언트 아이디 설정
         mapContext.setupMapView(mapView);
 
         // initialize map view
@@ -386,12 +384,7 @@ public class MainFragment4 extends Fragment implements MainPresenter.Fragment4 {
     }
 
     @Override
-    public void viewSetting() {
-
-    }
-
-    @Override
-    public void settingUI(View view) {
+    public void updateView() {
 
     }
 }

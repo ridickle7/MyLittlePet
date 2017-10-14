@@ -13,31 +13,46 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import ridickle.co.kr.mylittlepet.login.LoginActivity;
-import ridickle.co.kr.mylittlepet.MyApplication;
 import ridickle.co.kr.mylittlepet.R;
+import ridickle.co.kr.mylittlepet.login.LoginActivity;
+import ridickle.co.kr.mylittlepet.main.fragment1.fragment1_1.MainF1Fragment1;
+import ridickle.co.kr.mylittlepet.main.fragment3.MainFragment3;
 
-public class MainActivity extends AppCompatActivity implements MainPresenter.View {
+public class MainActivity extends AppCompatActivity implements MainPresenter.view {
     MainPresenter mPresenter;
     Toolbar toolBar;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
 
-    TabLayout tabLayout;
-    FrameLayout frameLayout;
+    TabLayout mTabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mPresenter = MainPresenterImpl.newInstance();
-        mPresenter.uiSetting(this);
+        mPresenter = MainPresenterImpl.getInstance(this);
+        mPresenter.loadItem();
     }
 
+    @Override
+    public void updateView() {
+        mTabLayout = (TabLayout) findViewById(R.id.tab);
+        mTabLayout = mPresenter.tabSetting(mTabLayout);
+
+        drawerSetting();
+
+        new Handler().postDelayed(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        mTabLayout.getTabAt(2).select();
+                    }
+                }, 100);
+        MainModel.replaceFragment(this, MainFragment3.getInstance(), R.id.frameLayout);
+    }
 
     private void drawerSetting() {
         // 1. 네비게이션 버튼 활성화 (햄버그바)
@@ -60,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
                 int id = menuItem.getItemId();
                 switch (id) {
                     case R.id.settingItem1: // 로그아웃
-                        MyApplication.getOAuthLoginInstance().logout(getApplicationContext());
+                        LoginActivity.getOAuthLoginInstance().logout(getApplicationContext());
                         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                         finish();
                         break;
@@ -73,7 +88,6 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
                 return true;
             }
         });
-
     }
 
     @Override
@@ -108,24 +122,10 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
         Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
     }
 
-    // fragment 세팅
     @Override
-    public void viewSetting() {
-        new Handler().postDelayed(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        tabLayout.getTabAt(2).select();
-                    }
-                }, 100);
-    }
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-    @Override
-    public void settingUI() {
-        tabLayout = (TabLayout) findViewById(R.id.tab);
-        frameLayout = (FrameLayout) findViewById(R.id.frameLayout);
-
-        drawerSetting();
-        mPresenter.fragmentSetting(tabLayout, this, null, MainPresenterImpl.MAINACTIVITY_ACTIVITY);
+        MainF1Fragment1.newInstance().onActivityResult(requestCode, resultCode, data);
     }
 }

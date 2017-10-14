@@ -9,25 +9,26 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 
 import ridickle.co.kr.mylittlepet.R;
-import ridickle.co.kr.mylittlepet.main.MainPresenter;
-import ridickle.co.kr.mylittlepet.main.MainPresenterImpl;
 
 /**
  * Created by ridickle on 2017. 6. 2..
  */
 
-public class MainFragment2 extends Fragment implements MainPresenter.Fragment2 {
+public class MainFragment2 extends Fragment implements MainF2Presenter.fragment {
     static MainFragment2 instance;
-    MainPresenter mPresenter;
+    MainF2Presenter mPresenter;
+
+    private View convertView;
     EditText f2Gender, f2Age, f2Address;
     SeekBar f2Weight;
+    int seekBarNum = 2;
 
     public MainFragment2() {
         // Required empty public constructor
-        mPresenter = MainPresenterImpl.newInstance();
+        mPresenter = MainF2PresenterImpl.getInstance(this);
     }
 
-    public static MainFragment2 newInstance() {
+    public static MainFragment2 getInstance() {
         if (instance == null)
             instance = new MainFragment2();
         return instance;
@@ -37,24 +38,14 @@ public class MainFragment2 extends Fragment implements MainPresenter.Fragment2 {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View convertView = inflater.inflate(R.layout.fragment_main_fragment2, container, false);
-        mPresenter.uiSetting(convertView, this);
+        convertView = inflater.inflate(R.layout.fragment_main_fragment2, container, false);
+        mPresenter.loadItem();
 
         return convertView;
     }
 
     @Override
-    public void seekBarSetting() {
-
-    }
-
-    @Override
-    public void viewSetting() {
-
-    }
-
-    @Override
-    public void settingUI(View convertView) {
+    public void updateView() {
         f2Gender = (EditText) convertView.findViewById(R.id.f2Gender);
         f2Age = (EditText) convertView.findViewById(R.id.f2Age);
         f2Weight = (SeekBar) convertView.findViewById(R.id.f2Weight);
@@ -64,10 +55,13 @@ public class MainFragment2 extends Fragment implements MainPresenter.Fragment2 {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean booleanValue) {
                 if (progress <= 25) {
+                    seekBarNum = 0;
                     seekBar.setProgress(0);
                 } else if (progress >= 75) {
+                    seekBarNum = 1;
                     seekBar.setProgress(100);
                 } else {
+                    seekBarNum = 2;
                     seekBar.setProgress(50);
                 }
             }

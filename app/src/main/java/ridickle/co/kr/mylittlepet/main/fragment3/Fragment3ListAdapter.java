@@ -12,10 +12,10 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import ridickle.co.kr.mylittlepet.DogInfo;
+import ridickle.co.kr.mylittlepet.MyApplication;
+import ridickle.co.kr.mylittlepet.MySharedPreference;
+import ridickle.co.kr.mylittlepet.Network.DataBody.Network_User;
 import ridickle.co.kr.mylittlepet.R;
-import ridickle.co.kr.mylittlepet.main.MainPresenterImpl;
-import ridickle.co.kr.mylittlepet.RecyclerViewPresenter;
 
 /**
  * Created by ridickle on 2017. 6. 3..
@@ -26,15 +26,13 @@ public class Fragment3ListAdapter extends RecyclerView.Adapter<Fragment3ListAdap
 
     Context context;
     LayoutInflater inflater;
-    ArrayList<DogInfo> dogInfoList;
+    ArrayList<Network_User> userList;
 
-    public Fragment3ListAdapter(Context ctx, ArrayList<DogInfo> list) {
+    public Fragment3ListAdapter(Context ctx, ArrayList<Network_User> list) {
         context = ctx;
-        dogInfoList = list;
+        userList = list;
         inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
-
-
 
     @Override
     public DogInfoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -47,20 +45,20 @@ public class Fragment3ListAdapter extends RecyclerView.Adapter<Fragment3ListAdap
 
     @Override
     public void onBindViewHolder(final DogInfoViewHolder holder, int position) {
-        DogInfo temp = dogInfoList.get(position);
+        Network_User userItem = userList.get(position);
 
-        RecyclerViewPresenter.setImage(context, holder.background, temp.getImgUrl(), MainPresenterImpl.MAINACTIVITY_FRAGMENT3);
+        MyApplication.setImage(context, holder.background, userItem.getuImageURL());
 
         // 좋아요 없을 경우
-        if(temp.getIsGood() == 0)
+        if(userItem.getuFollowingList().indexOf(MySharedPreference.getDefaultInstance().getStringData(MySharedPreference.USER_ID)) == 0)
             holder.goodButton.setBackground(context.getResources().getDrawable(R.mipmap.ic_launcher));
         else{
             holder.goodButton.setBackground(context.getResources().getDrawable(R.mipmap.ic_launcher));
 
         }
 
-        // 암컷 수컷 (암컷 = 0)
-        if(temp.getGender() == 0){
+        // 암컷 수컷 (암컷 = true)
+        if(userItem.getuGender()){
             holder.genderImage.setBackground(context.getResources().getDrawable(R.mipmap.ic_launcher));
         }
         else{
@@ -68,19 +66,19 @@ public class Fragment3ListAdapter extends RecyclerView.Adapter<Fragment3ListAdap
         }
 
         // 강아지 이름
-        holder.name.setText(temp.getName());
+        holder.name.setText(userItem.getuNickname());
 
         // 강아지 주소
-        holder.address.setText(temp.getAddress());
+        holder.address.setText(userItem.getuAddress());
 
         // 거리
-        holder.distanceText.setText(String.valueOf(temp.getDistance()));
+//        holder.distanceText.setText(String.valueOf(userItem.getDistance()));
 
     }
 
     @Override
     public int getItemCount() {
-        return dogInfoList.size();
+        return userList.size();
     }
 
     class DogInfoViewHolder extends RecyclerView.ViewHolder{

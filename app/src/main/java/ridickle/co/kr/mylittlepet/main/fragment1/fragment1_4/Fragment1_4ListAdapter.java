@@ -10,9 +10,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import ridickle.co.kr.mylittlepet.MyApplication;
 import ridickle.co.kr.mylittlepet.R;
-import ridickle.co.kr.mylittlepet.main.MainPresenterImpl;
-import ridickle.co.kr.mylittlepet.RecyclerViewPresenter;
+import ridickle.co.kr.mylittlepet.Util.RecyclerViewPresenter;
 
 /**
  * Created by ridickle on 2017. 10. 3..
@@ -54,7 +54,7 @@ public class Fragment1_4ListAdapter extends RecyclerView.Adapter<Fragment1_4List
     public void onBindViewHolder(PopularViewHolder holder, int position) {
         Network_Popular item = popularList.get(position);
 
-        RecyclerViewPresenter.setImage(context, holder.logoImage, item.getLogoImageURL(), MainPresenterImpl.MAINACTIVITY_FRAGMENT1_4);
+        MyApplication.setImage(context, holder.logoImage, item.getLogoImageURL());
         holder.popularTitle.setText(item.getTitle());
         holder.popularName.setText(item.getName());
     }

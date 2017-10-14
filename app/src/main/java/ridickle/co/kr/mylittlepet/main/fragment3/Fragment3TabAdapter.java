@@ -4,6 +4,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import ridickle.co.kr.mylittlepet.main.fragment3.fragment1.Fragment3Tab1;
+import ridickle.co.kr.mylittlepet.main.fragment3.fragment2.Fragment3Tab2;
+
 /**
  * Created by ridickle on 2017. 6. 2..
  */

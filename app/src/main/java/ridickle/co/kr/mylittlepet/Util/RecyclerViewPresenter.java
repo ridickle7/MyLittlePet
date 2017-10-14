@@ -1,16 +1,9 @@
-package ridickle.co.kr.mylittlepet;
+package ridickle.co.kr.mylittlepet.Util;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 
 import java.util.ArrayList;
 
@@ -52,25 +45,6 @@ public class RecyclerViewPresenter {
     public static <T> ArrayList<T> remove(ArrayList<T> list, int index){
         list.remove(index);
         return list;
-    }
-
-    public static void setImage(Context context, final View view, String URL, int flag){
-        // 이미지 처리
-        if (!(URL.equals(""))) {
-            Glide.with(context.getApplicationContext()).load(URL).into(new SimpleTarget<Drawable>() {
-                @Override
-                public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
-                    view.setBackground(resource);
-                }
-            });
-        } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                view.setBackground(context.getDrawable(R.mipmap.ic_launcher));
-            }
-            else{
-                view.setBackground(context.getResources().getDrawable(R.mipmap.ic_launcher));
-            }
-        }
     }
 
     public static void recyclerViewSetting(Context context, RecyclerView recyclerView, int gridNum, RecyclerView.Adapter adapter) {

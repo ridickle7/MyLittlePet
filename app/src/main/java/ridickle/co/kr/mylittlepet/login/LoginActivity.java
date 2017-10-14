@@ -1,9 +1,12 @@
 package ridickle.co.kr.mylittlepet.login;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.nhn.android.naverlogin.OAuthLogin;
@@ -17,15 +20,23 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import ridickle.co.kr.mylittlepet.JSONPresenter;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import ridickle.co.kr.mylittlepet.MyApplication;
+import ridickle.co.kr.mylittlepet.MySharedPreference;
+import ridickle.co.kr.mylittlepet.Network.DataBody.Network_User;
+import ridickle.co.kr.mylittlepet.Network.NetworkPresenter;
 import ridickle.co.kr.mylittlepet.R;
+import ridickle.co.kr.mylittlepet.Util.JSONPresenter;
+import ridickle.co.kr.mylittlepet.init.InitActivity;
+import ridickle.co.kr.mylittlepet.main.MainActivity;
 
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private Context ctx;
-    private OAuthLogin mOAuthLoginInstance;
+    private static OAuthLogin mOAuthLoginInstance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ctx = this;
 
-        MyApplication.setOAuthLoginInstance(ctx);
-        mOAuthLoginInstance = MyApplication.getOAuthLoginInstance();
+        setOAuthLoginInstance(ctx);
 
         OAuthLoginButton mOAuthLoginButton = (OAuthLoginButton) findViewById(R.id.buttonOAuthLoginImg);
         mOAuthLoginButton.setOAuthLoginHandler(mOAuthLoginHandler);
@@ -51,15 +61,11 @@ public class LoginActivity extends AppCompatActivity {
         public void run(boolean success) {
             if (success) {
                 String accessToken = mOAuthLoginInstance.getAccessToken(ctx);
-                String refreshToken = mOAuthLoginInstance.getRefreshToken(ctx);
-                long expiresAt = mOAuthLoginInstance.getExpiresAt(ctx);
-                String tokenType = mOAuthLoginInstance.getTokenType(ctx);
+//                String refreshToken = mOAuthLoginInstance.getRefreshToken(ctx);
+//                long expiresAt = mOAuthLoginInstance.getExpiresAt(ctx);
+//                String tokenType = mOAuthLoginInstance.getTokenType(ctx);
 
                 new nLoginTask().execute(accessToken);
-
-//                getApplicationContext().startActivity(new Intent(getApplicationContext(), InitActivity.class));
-//                Activity temp = (Activity)ctx;
-//                ((Activity) ctx).finish();
             } else {
                 String errorCode = mOAuthLoginInstance.getLastErrorCode(ctx).getCode();
                 String errorDesc = mOAuthLoginInstance.getLastErrorDesc(ctx);
@@ -68,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     };
 
-    private class nLoginTask extends AsyncTask<String, Void, String>{
+    private class nLoginTask extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... accessToken) {
@@ -78,7 +84,29 @@ public class LoginActivity extends AppCompatActivity {
         protected void onProgressUpdate(Void... progress) {
         }
 
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(final String tokenId) {
+            Log.d(TAG, tokenId);
+            Call<Network_User> call = NetworkPresenter.getRetrofitService().get_usersLogin(tokenId);
+            call.enqueue(new Callback<Network_User>() {
+                @Override
+                public void onResponse(Call<Network_User> call, Response<Network_User> response) {
+                    MySharedPreference.getInstance(MyApplication.getDefaultContext()).setData(MySharedPreference.USER_TOKENID, tokenId);
+                    if (response.body() != null) {
+                        MyApplication.setUser(response.body());
+                        MyApplication.setSharedPreference(response.body());
+
+                        getApplicationContext().startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        ((Activity) ctx).finish();
+                    } else {
+                        getApplicationContext().startActivity(new Intent(getApplicationContext(), InitActivity.class));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Network_User> call, Throwable t) {
+
+                }
+            });
         }
     }
 
@@ -109,5 +137,21 @@ public class LoginActivity extends AppCompatActivity {
             System.out.println(e);
             return "";
         }
+    }
+
+    private void setOAuthLoginInstance(Context ctx) {
+        mOAuthLoginInstance = OAuthLogin.getInstance();
+        mOAuthLoginInstance.init(
+                ctx,
+                MyApplication.getProp().getProperty("ClientId")
+                , MyApplication.getProp().getProperty("ClientSecret")
+                , "MyLittlePet"
+                //,OAUTH_CALLBACK_INTENT
+                // SDK 4.1.4 버전부터는 OAUTH_CALLBACK_INTENT변수를 사용하지 않습니다.
+        );
+    }
+
+    public static OAuthLogin getOAuthLoginInstance() {
+        return mOAuthLoginInstance;
     }
 }

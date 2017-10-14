@@ -8,27 +8,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
+import ridickle.co.kr.mylittlepet.Network.DataBody.Network_User;
 import ridickle.co.kr.mylittlepet.R;
-import ridickle.co.kr.mylittlepet.main.MainPresenter;
-import ridickle.co.kr.mylittlepet.main.MainPresenterImpl;
 
 /**
  * Created by ridickle on 2017. 6. 2..
  */
 
-public class MainFragment3 extends Fragment implements MainPresenter.Fragment3 {
-    static MainFragment3 instance;
+public class MainFragment3 extends Fragment implements MainF3Presenter.fragment {
+    public static final String TAG = "MainFragment3";
+    private static MainFragment3 instance;
+
+    private View convertView;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private Fragment3TabAdapter vpa;
-    private MainPresenter mPresenter;
+    private MainF3Presenter mPresenter;
 
     public MainFragment3() {
         // Required empty public constructor
-        mPresenter = MainPresenterImpl.newInstance();
+        mPresenter = MainF3PresenterImpl.getInstance(this);
     }
 
-    public static MainFragment3 newInstance() {
+    public static MainFragment3 getInstance() {
         if (instance == null)
             instance = new MainFragment3();
         return instance;
@@ -37,19 +41,14 @@ public class MainFragment3 extends Fragment implements MainPresenter.Fragment3 {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View convertView = inflater.inflate(R.layout.fragment_main_fragment3, container, false);
-        mPresenter.uiSetting(convertView, this);
+        convertView = inflater.inflate(R.layout.fragment_main_fragment3, container, false);
+        mPresenter.loadItem();
 
         return convertView;
     }
 
     @Override
-    public void viewSetting() {
-
-    }
-
-    @Override
-    public void settingUI(View convertView) {
+    public void updateView() {
         // setting ViewPager
         tabLayout = (TabLayout) convertView.findViewById(R.id.fragment3_tabs);
         viewPager = (ViewPager) convertView.findViewById(R.id.viewPager);

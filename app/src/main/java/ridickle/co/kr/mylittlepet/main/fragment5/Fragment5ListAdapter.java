@@ -12,11 +12,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Date;
 
+import ridickle.co.kr.mylittlepet.MyApplication;
+import ridickle.co.kr.mylittlepet.Network.DataBody.Network_Event;
 import ridickle.co.kr.mylittlepet.R;
-import ridickle.co.kr.mylittlepet.RecyclerViewPresenter;
+import ridickle.co.kr.mylittlepet.Util.RecyclerViewPresenter;
 import ridickle.co.kr.mylittlepet.detailEvent.DetailEventActivity;
-import ridickle.co.kr.mylittlepet.main.MainPresenterImpl;
 
 /**
  * Created by ridickle on 2017. 10. 3..
@@ -24,14 +26,16 @@ import ridickle.co.kr.mylittlepet.main.MainPresenterImpl;
 
 public class Fragment5ListAdapter extends RecyclerView.Adapter<Fragment5ListAdapter.PopularEventHolder> {
     Context context;
-    ArrayList<Network_PopularEvent> popularList;
+    ArrayList<Network_Event> popularList;
 
     public Fragment5ListAdapter(Context context) {
         this.context = context;
         popularList = RecyclerViewPresenter.init();
+    }
 
-        for (int i = 0; i < 5; i++)    // Dummy 값
-            popularList = RecyclerViewPresenter.add(popularList, new Network_PopularEvent(true, "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTW68XNUfjWy2DrPBa65WhxCC7AlOi4VRVmEorGupckpHCuuQn41pzEEF8", i + "월의 드립상을 뽑자", "2017." + i + ".24 ~ " + i + ".25"));
+    public Fragment5ListAdapter(Context context, ArrayList<Network_Event> list) {
+        this.context = context;
+        popularList = list;
     }
 
     public class PopularEventHolder extends RecyclerView.ViewHolder {
@@ -60,9 +64,9 @@ public class Fragment5ListAdapter extends RecyclerView.Adapter<Fragment5ListAdap
 
     @Override
     public void onBindViewHolder(PopularEventHolder holder, int position) {
-        Network_PopularEvent item = popularList.get(position);
+        final Network_Event item = popularList.get(position);
 
-        if (item.getEnded()) {
+        if (new Date().compareTo(new Date(item.geteEndDate())) > 0) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 holder.f5Star.setBackground(context.getDrawable(R.mipmap.ic_launcher));
             } else {
@@ -78,16 +82,17 @@ public class Fragment5ListAdapter extends RecyclerView.Adapter<Fragment5ListAdap
             holder.f5IsEnded.setText("진행 중인 투표");
         }
 
-        RecyclerViewPresenter.setImage(context, holder.f5Image, item.getImageURL(), MainPresenterImpl.MAINACTIVITY_FRAGMENT1_4);
+        MyApplication.setImage(context, holder.f5Image, item.geteImageURL());
         holder.f5Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, DetailEventActivity.class);
+                intent.putExtra("eId", item.get_id());
                 ((Activity)context).startActivity(intent);
             }
         });
-        holder.f5Title.setText(item.getTitle());
-        holder.f5Term.setText(item.getTerm());
+        holder.f5Title.setText(item.geteName());
+        holder.f5Term.setText(MyApplication.getFormattedDate(item.geteStartDate()) + " ~ " + MyApplication.getFormattedDate(item.geteEndDate()));
     }
 
     @Override
