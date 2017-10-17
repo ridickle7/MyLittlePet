@@ -1,5 +1,5 @@
 ![Image](https://github.com/ridickle7/LeeSangWoo_Reference/blob/master/1.%20ImageRef/3.%20MyLittlePet/githubHeadPage.PNG)  
-# 마이리틀펫 (MyLittlePet)
+# 마이리틀펫 (MyLittlePet - Client)
 
 다운로드 링크 : 개발 중! <br>
 
