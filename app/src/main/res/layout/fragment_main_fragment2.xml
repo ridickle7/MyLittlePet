@@ -4,104 +4,45 @@
     android:layout_height="match_parent"
     tools:context="ridickle.co.kr.mylittlepet.main.fragment2.MainFragment2">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/f2GenderName"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="성별" />
+            android:layout_height="match_parent"
+            android:layout_above="@+id/f2Search">
 
-        <EditText
-            android:id="@+id/f2Gender"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp" />
-
-        <TextView
-            android:id="@+id/f2AgeName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="나이" />
-
-        <EditText
-            android:id="@+id/f2Age"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp" />
-
-        <TextView
-            android:id="@+id/f2SpecifyName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="품종" />
-
-        <EditText
-            android:id="@+id/f2Specify"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp" />
-
-        <TextView
-            android:id="@+id/f2AddresssName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="지역" />
-
-        <EditText
-            android:id="@+id/f2Address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp" />
-
-        <TextView
-            android:id="@+id/f2WeightName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="몸무게" />
-
-        <SeekBar
-            android:id="@+id/f2Weight"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
-            android:max="100"
-            android:progress="100" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/f2SearchList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/f2InitText" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/f2InitText"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="50dp"
+                android:layout_marginTop="50dp"
                 android:gravity="center"
-                android:text="소형 (1~5kg)" />
+                android:text="원하는 검색 조건을 설정해주세요 :)\n조건에 적합한 강아지 친구를 찾아드릴게요!"
+                android:textColor="#adadad"
+                android:textSize="14sp" />
+        </RelativeLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="중형 (5~10kg)" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="대형 (10kg 이상)" />
-        </LinearLayout>
-    </LinearLayout>
-
+        <Button
+            android:id="@+id/f2Search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="22dp"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="9dp"
+            android:background="@drawable/button_mainfragment2"
+            android:text="검색하기"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+    </RelativeLayout>
 </FrameLayout>

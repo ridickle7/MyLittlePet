@@ -29,18 +29,18 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     public TabLayout tabSetting(final TabLayout tabLayout) {
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.tab1_main));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.tab2_main));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.mipmap.ic_launcher));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.mipmap.ic_launcher));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.mipmap.ic_launcher));
-        tabLayout.addTab(tabLayout.newTab().setText("Send"));
-        tabLayout.addTab(tabLayout.newTab().setText("Send & Post"));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.tab4_main));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.tab5_main));
 
         // 탭 클릭 리스너
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 MainModel.setCurrentTabFragment((FragmentActivity)activity, tabLayout.getSelectedTabPosition());
-                activity.tabClick("Tab" + tabLayout.getSelectedTabPosition());
+                activity.tabClick(tabLayout.getSelectedTabPosition());
             }
 
             @Override

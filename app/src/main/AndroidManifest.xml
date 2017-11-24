@@ -57,7 +57,7 @@
         <activity
             android:name=".init.InitActivity"
             android:label="@string/title_activity_init"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <service
             android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
@@ -65,8 +65,11 @@
 
         <activity
             android:name=".detailContent.DetailContentActivity"
-            android:theme="@style/NoActionBarTheme">
-        </activity>
+            android:theme="@style/NoActionBarTheme"></activity>
+        <activity
+            android:name=".Noti.NotiActivity"
+            android:label="@string/title_activity_message"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

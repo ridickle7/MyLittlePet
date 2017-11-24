@@ -13,12 +13,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import ridickle.co.kr.mylittlepet.MyApplication;
+import ridickle.co.kr.mylittlepet.MySharedPreference;
+import ridickle.co.kr.mylittlepet.Noti.NotiActivity;
 import ridickle.co.kr.mylittlepet.R;
 import ridickle.co.kr.mylittlepet.login.LoginActivity;
-import ridickle.co.kr.mylittlepet.main.fragment1.fragment1_1.MainF1Fragment1;
 import ridickle.co.kr.mylittlepet.main.fragment3.MainFragment3;
+import ridickle.co.kr.mylittlepet.main.fragment3.fragment3_1.MainF3Fragment1;
+
+import static ridickle.co.kr.mylittlepet.R.id.nvLogout;
+import static ridickle.co.kr.mylittlepet.R.id.nvSetting;
 
 public class MainActivity extends AppCompatActivity implements MainPresenter.view {
     MainPresenter mPresenter;
@@ -27,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.vie
     NavigationView navigationView;
 
     TabLayout mTabLayout;
+//    LinearLayout f2BottomSheet;
+//    public static BottomSheetBehavior f2BottomSheetBehavior;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.vie
         mTabLayout = mPresenter.tabSetting(mTabLayout);
 
         drawerSetting();
+//        bottomSheetSetting();
 
         new Handler().postDelayed(
                 new Runnable() {
@@ -59,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.vie
         toolBar = (Toolbar) findViewById(R.id.toolBar);
         setSupportActionBar(toolBar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeAsUpIndicator(R.mipmap.ic_launcher);
+        actionBar.setHomeAsUpIndicator(R.drawable.navi_icon);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         // 2. id 연결 및 리스트 구현
@@ -69,26 +81,68 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.vie
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                menuItem.setChecked(true);
+//                menuItem.setChecked(true);
                 drawerLayout.closeDrawers();
 
                 int id = menuItem.getItemId();
                 switch (id) {
-                    case R.id.settingItem1: // 로그아웃
+                    case nvLogout:         // 로그아웃
                         LoginActivity.getOAuthLoginInstance().logout(getApplicationContext());
                         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                         finish();
                         break;
-                    case R.id.settingItem2:
+
+                    case R.id.nvTag:            // 관심 태그 설정
                         break;
 
-                    case R.id.settingItem3:
+                    case R.id.nvNotification:   // 공지사항
+                        break;
+
+                    case R.id.nvQnA:            // 문의하기
+                        break;
+
+                    case nvSetting:        // 설정
                         break;
                 }
                 return true;
             }
         });
     }
+
+//    private void bottomSheetSetting() {
+//        f2BottomSheet = (LinearLayout) findViewById(R.id.f2BottomSheet);
+//        f2BottomSheetBehavior = BottomSheetBehavior.from(f2BottomSheet);
+//        f2BottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+//
+//        f2BottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+//            private ArrayList<String> inputArr = new ArrayList<String>();
+//
+//            @Override
+//            public void onStateChanged(@NonNull View bottomSheet, int newState) {       // state가 바뀌었을 때 호출됨
+//                switch (newState) {
+//                    case BottomSheetBehavior.STATE_COLLAPSED:    // 화면에 노출될 때
+//                        break;
+//
+//                    case BottomSheetBehavior.STATE_HIDDEN:      // 숨겨졌을 때
+//                        break;
+//
+//                    default:
+//                        break;
+//                }
+//                Log.d("TAG", "newState " + newState);
+//            }
+//
+//            @Override
+//            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+//                // Slide ...
+//                // 1이면 완전 펼쳐진 상태
+//                // 0이면 peekHeight인 상태
+//                // -1이면 숨김 상태
+//                Log.i("TAG", "slideOffset " + slideOffset);
+//            }
+//        });
+//    }
+
 
     @Override
     protected void onResume() {
@@ -98,6 +152,30 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.vie
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
+
+        // 헤더 설정
+        LinearLayout headerLayout = (LinearLayout) navigationView.getHeaderView(0);
+        ImageView nvImageURL = (ImageView) headerLayout.findViewById(R.id.nvImageURL);
+        MyApplication.setImage(getApplicationContext(), nvImageURL, MySharedPreference.getDefaultInstance().getStringData(MySharedPreference.USER_IMAGEURL));
+
+        TextView nvNickName = (TextView) headerLayout.findViewById(R.id.nvNickName);
+        nvNickName.setText(MySharedPreference.getDefaultInstance().getStringData(MySharedPreference.USER_NICKNAME));
+
+        TextView nvProfileButton = (TextView) headerLayout.findViewById(R.id.nvProfileButton);
+        nvProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        // 리스트 설정
+        String[] menuText = {"로그아웃", "메시지", "관심 태그 설정", "", "공지사항", "문의하기", "설정"};
+        for (int i = 0; i < navigationView.getMenu().size(); i++) {
+            LinearLayout nvlayout = (LinearLayout) navigationView.getMenu().getItem(i).getActionView();
+            ((TextView) nvlayout.findViewById(R.id.itemTitle)).setText(menuText[i]);
+        }
+
         return true;
     }
 
@@ -110,7 +188,9 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.vie
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
 
-            case R.id.action_settings:
+            case R.id.action_message:
+                Intent intent = new Intent(getApplicationContext(), NotiActivity.class);
+                startActivity(intent);
                 return true;
         }
 
@@ -118,14 +198,25 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.vie
     }
 
     @Override
-    public void tabClick(String str) {
-        Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
+    public void tabClick(int tabIndex) {
+//        Toast.makeText(getApplicationContext(), tabIndex + "", Toast.LENGTH_SHORT).show();
+        if (tabIndex == 0)
+            setTitle("마이리틀펫");
+        else if (tabIndex == 1)
+            setTitle("맞춤검색");
+        else if (tabIndex == 2)
+            setTitle(MySharedPreference.getDefaultInstance().getStringData(MySharedPreference.USER_NICKNAME));
+        else if (tabIndex == 3)
+            setTitle("마이리틀펫");
+        else if (tabIndex == 4)
+            setTitle("이 달의 인기왕");
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        MainF1Fragment1.newInstance().onActivityResult(requestCode, resultCode, data);
+        MainF3Fragment1.newInstance().onActivityResult(requestCode, resultCode, data);
     }
 }

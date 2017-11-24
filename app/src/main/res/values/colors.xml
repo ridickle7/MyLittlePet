@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#f17762</color>
+    <color name="colorPrimaryDark">#f17762</color>
     <color name="colorAccent">#FF4081</color>
     <color name="POI_FONT_COLOR_ALPHABET">#FFFFFFFF</color>
     <color name="POI_FONT_COLOR_NUMBER">#FF909090</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="white">#FFFFFF</color>
 </resources>

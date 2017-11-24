@@ -15,6 +15,6 @@ public interface MainPresenter {
     public interface view {
         void updateView();
 
-        void tabClick(String tabIndex);
+        void tabClick(int tabIndex);
     }
 }

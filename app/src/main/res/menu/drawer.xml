@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/nvLogout"
+        app:actionLayout="@layout/drawer_list_item"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/nvMessage"
+        app:actionLayout="@layout/drawer_list_item"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/nvTag"
+        app:actionLayout="@layout/drawer_list_item"
+        app:showAsAction="always" />
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/settingItem1"
-            android:checked="true"
-            android:icon="@mipmap/ic_launcher"
-            android:title="로그아웃" />
-        <item
-            android:id="@+id/settingItem2"
-            android:icon="@mipmap/ic_launcher"
-            android:title="준비중1" />
-        <item
-            android:id="@+id/settingItem3"
-            android:icon="@mipmap/ic_launcher"
-            android:title="준비중2" />
-    </group>
+    <item
+        app:actionLayout="@layout/drawer_list_item"
+        app:showAsAction="always" />
 
-    <item android:title="서브 메뉴">
-        <menu>
-            <item
-                android:icon="@mipmap/ic_launcher"
-                android:id="@+id/nav_sub_menu_item01"
-                android:title="메뉴1" />
-            <item
-                android:icon="@mipmap/ic_launcher"
-                android:id="@+id/nav_sub_menu_item02"
-                android:title="메뉴2"  />
-        </menu>
-    </item>
-
+    <item
+        android:id="@+id/nvNotification"
+        app:actionLayout="@layout/drawer_list_item"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/nvQnA"
+        app:actionLayout="@layout/drawer_list_item"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/nvSetting"
+        app:actionLayout="@layout/drawer_list_item"
+        app:showAsAction="always" />
 </menu>

@@ -6,13 +6,13 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/f1ItemNum"
+        android:id="@+id/f3ItemNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="20" />
 
     <TextView
-        android:id="@+id/f1ItemText"
+        android:id="@+id/f3ItemText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="게시물" />

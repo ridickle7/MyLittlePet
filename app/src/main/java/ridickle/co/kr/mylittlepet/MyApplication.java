@@ -48,6 +48,7 @@ public class MyApplication extends Application {
     private static TransferUtility transferUtility;
     private static Network_User user;
 
+    public static String tempStr = "";
     public static int width = 0;
     public static int height = 0;
 

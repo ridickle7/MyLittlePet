@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="11.7dp"
+    android:background="@drawable/item_mainfragment5"
     android:orientation="vertical">
 
     <LinearLayout
@@ -16,25 +18,29 @@
 
             <ImageView
                 android:id="@+id/f5Star"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="11dp"
+                android:layout_height="11dp"
+                android:layout_margin="10.7dp" />
 
             <TextView
                 android:id="@+id/f5IsEnded"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="11.3sp" />
 
         </LinearLayout>
 
         <ImageView
-            android:scaleType="centerInside"
             android:id="@+id/f5Image"
             android:layout_width="match_parent"
-            android:layout_height="200dp" />
+            android:layout_height="200dp"
+            android:scaleType="centerInside" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="12.4dp"
             android:orientation="vertical">
 
             <TextView
@@ -45,7 +51,8 @@
             <TextView
                 android:id="@+id/f5Term"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5.3dp" />
 
         </LinearLayout>
 

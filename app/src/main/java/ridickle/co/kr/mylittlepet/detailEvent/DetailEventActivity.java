@@ -22,7 +22,7 @@ import ridickle.co.kr.mylittlepet.Network.DataBody.Network_Event;
 import ridickle.co.kr.mylittlepet.R;
 import ridickle.co.kr.mylittlepet.Util.RecyclerViewPresenter;
 import ridickle.co.kr.mylittlepet.detailEvent.fragmentDialog.DetailEventDialogFragment;
-import ridickle.co.kr.mylittlepet.main.fragment1.fragment1_1.Fragment1_1ListAdapter;
+import ridickle.co.kr.mylittlepet.main.fragment3.fragment3_1.Fragment3_1ListAdapter;
 
 public class DetailEventActivity extends AppCompatActivity implements DetailEventPresenter.view {
     private static final String TAG = "DetailEventActivity";
@@ -36,7 +36,7 @@ public class DetailEventActivity extends AppCompatActivity implements DetailEven
     RecyclerView dRecyclerView;
     ImageView dImageURL;
     TextView dIntroduce, dTerm, dContentNum;
-    Fragment1_1ListAdapter dAdapter;
+    Fragment3_1ListAdapter dAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +80,7 @@ public class DetailEventActivity extends AppCompatActivity implements DetailEven
         dContentNum.setText(contentList.size() + "개 컨텐츠");
 
         dRecyclerView = (RecyclerView) findViewById(R.id.dRecyclerView);
-        dAdapter = new Fragment1_1ListAdapter(DetailEventActivity.this, 1, contentList);
+        dAdapter = new Fragment3_1ListAdapter(DetailEventActivity.this, 1, contentList);
         RecyclerViewPresenter.recyclerViewSetting(getApplicationContext(), dRecyclerView, 3, dAdapter);
     }
 

@@ -7,39 +7,69 @@
     android:layout_height="match_parent"
     tools:context="ridickle.co.kr.mylittlepet.main.MainActivity">
 
-    <!-- The main content view -->
-    <LinearLayout
-        android:id="@+id/content_frame"
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolBar"
+        <!-- The main content view -->
+        <LinearLayout
+            android:id="@+id/content_frame"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_above="@+id/frameLayout"
-            android:background="?attr/colorPrimary"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <FrameLayout
-                android:id="@+id/frameLayout"
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolBar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@+id/tab" />
+                android:layout_height="?attr/actionBarSize"
+                android:layout_above="@+id/frameLayout"
+                android:layout_gravity="center"
+                android:background="?attr/colorPrimary"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark" />
 
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tab"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true" />
-        </RelativeLayout>
+                android:layout_height="match_parent">
 
-    </LinearLayout>
+                <FrameLayout
+                    android:id="@+id/frameLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_above="@+id/tab" />
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tab"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <!--<LinearLayout-->
+            <!--android:id="@+id/f2BottomSheet"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="#FFFFFF"-->
+            <!--android:orientation="vertical"-->
+            <!--app:behavior_hideable="true"-->
+            <!--app:behavior_peekHeight="64dp"-->
+            <!--app:layout_behavior="@string/bottom_sheet_behavior">-->
+
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="abcd"-->
+                <!--android:textColor="@color/colorAccent" />-->
+
+
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="efgh"-->
+                <!--android:textColor="@color/colorAccent" />-->
+
+        <!--</LinearLayout>-->
+    </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_view"

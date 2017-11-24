@@ -8,8 +8,7 @@ public interface MainF2Presenter {
 
     void loadItem();
 
-    public interface fragment{
-
+    public interface fragment {
         void updateView();
     }
 }

@@ -75,10 +75,10 @@ public class InitActivity extends AppCompatActivity implements InitPresenter.vie
                     weightFlag = 0;
                 } else if (progress >= 75) {
                     seekBar.setProgress(100);
-                    weightFlag = 1;
+                    weightFlag = 2;
                 } else {
                     seekBar.setProgress(50);
-                    weightFlag = 2;
+                    weightFlag = 1;
                 }
             }
 

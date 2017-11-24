@@ -47,6 +47,7 @@ public class RecyclerViewPresenter {
         return list;
     }
 
+    // 4. recyclerView adapter 세팅 및 매니저 세팅
     public static void recyclerViewSetting(Context context, RecyclerView recyclerView, int gridNum, RecyclerView.Adapter adapter) {
         RecyclerView.LayoutManager manager = null;
         if(gridNum > 1) {
@@ -57,7 +58,6 @@ public class RecyclerViewPresenter {
         }
 
         recyclerView.setHasFixedSize(true);
-
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
     }

@@ -2,13 +2,14 @@ package ridickle.co.kr.mylittlepet.main.fragment2;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.SeekBar;
+import android.widget.TextView;
 
 import ridickle.co.kr.mylittlepet.R;
+import ridickle.co.kr.mylittlepet.Util.RecyclerViewPresenter;
 
 /**
  * Created by ridickle on 2017. 6. 2..
@@ -19,8 +20,7 @@ public class MainFragment2 extends Fragment implements MainF2Presenter.fragment 
     MainF2Presenter mPresenter;
 
     private View convertView;
-    EditText f2Gender, f2Age, f2Address;
-    SeekBar f2Weight;
+    public static TextView initTextView;
     int seekBarNum = 2;
 
     public MainFragment2() {
@@ -46,35 +46,9 @@ public class MainFragment2 extends Fragment implements MainF2Presenter.fragment 
 
     @Override
     public void updateView() {
-        f2Gender = (EditText) convertView.findViewById(R.id.f2Gender);
-        f2Age = (EditText) convertView.findViewById(R.id.f2Age);
-        f2Weight = (SeekBar) convertView.findViewById(R.id.f2Weight);
-        f2Address = (EditText) convertView.findViewById(R.id.f2Address);
-
-        f2Weight.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean booleanValue) {
-                if (progress <= 25) {
-                    seekBarNum = 0;
-                    seekBar.setProgress(0);
-                } else if (progress >= 75) {
-                    seekBarNum = 1;
-                    seekBar.setProgress(100);
-                } else {
-                    seekBarNum = 2;
-                    seekBar.setProgress(50);
-                }
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
+        RecyclerView f2RecyclerView = (RecyclerView) convertView.findViewById(R.id.f2SearchList);
+        Fragment2ListAdapter f2Adapter = new Fragment2ListAdapter(getActivity());
+        initTextView = (TextView) convertView.findViewById(R.id.f2InitText);
+        RecyclerViewPresenter.recyclerViewSetting(getActivity(), f2RecyclerView, 1, f2Adapter);
     }
 }
